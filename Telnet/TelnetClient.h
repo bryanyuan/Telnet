@@ -9,9 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "HostsDataSource.h"
 
-#define notificationTelnetConnOpenCompleted   @"NotificationTelnetConnOpenCompleted"
-#define notificationTelnetConnOpenFailed   @"NotificationTelnetConnOpenFailed"
-
 @protocol TelnetDelegate <NSObject>
 
 - (void)didReceiveMessage:(NSString *)msg;

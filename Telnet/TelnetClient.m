@@ -36,14 +36,12 @@ static void _send(id client, const char *buffer, size_t size) {
     myObjCSelectorPointer(client, @selector(flushData:), data);
 }
 static void _display(id telnetDelegate, const char *buffer, size_t size) {
-    //NSData *data = [NSData dataWithBytes:buffer length:size];
     NSString *msg = [NSString stringWithFormat:@"%.*s", (int)size, buffer];
     SEL sel = @selector(didReceiveMessage:);
     void (*myObjCSelectorPointer)(id, SEL, NSString *)  = (void (*)(id,SEL,NSString *))[telnetDelegate methodForSelector:sel];
     myObjCSelectorPointer(telnetDelegate, sel, msg);
 }
 static void _doEcho(id telnetDelegate, int echo) {
-    //NSData *data = [NSData dataWithBytes:buffer length:size];
     BOOL doEcho;
     if (echo) {
         doEcho = YES;
@@ -59,24 +57,19 @@ static void _event_handler(telnet_t *telnet, telnet_event_t *ev,
                            void *user_data) {
     printf("%s %d\n", __func__, ev->type);
     
-    //int sock = *(int*)user_data;
     TelnetClient *client = (__bridge TelnetClient *)user_data;
     id<TelnetDelegate> telnetDelegate = client.delegate;
     
     switch (ev->type) {
             /* data received */
         case TELNET_EV_DATA:
-            printf("数据：%.*s", (int)ev->data.size, ev->data.buffer);
+            printf("data：%.*s", (int)ev->data.size, ev->data.buffer);
             _display(telnetDelegate, ev->data.buffer, ev->data.size);
-            //fflush(stdout);
             break;
             /* data must be sent */
         case TELNET_EV_SEND:
         {
             _send(client, ev->data.buffer, ev->data.size);
-//            NSData *data = [NSData dataWithBytes:ev->data.buffer length:ev->data.size];
-//            void (*myObjCSelectorPointer)(id, SEL, NSData *)  = (void (*)(id,SEL,NSData *))[client methodForSelector:@selector(flushData:)];
-//            myObjCSelectorPointer(client, @selector(flushData:), data);
         }
             break;
             /* request to enable remote feature (or receipt) */
@@ -102,7 +95,7 @@ static void _event_handler(telnet_t *telnet, telnet_event_t *ev,
         case TELNET_EV_TTYPE:
             /* respond with our terminal type, if requested */
             if (ev->ttype.cmd == TELNET_TTYPE_SEND) {
-                telnet_ttype_is(telnet, "dumb"/*"vt100"*//*"xterm-256color"*//*getenv("TERM")*/);
+                telnet_ttype_is(telnet, "dumb");
             }
             break;
             /* respond to particular subnegotiations */
@@ -117,29 +110,6 @@ static void _event_handler(telnet_t *telnet, telnet_event_t *ev,
             break;
     }
 }
-/*
-static void _cleanup(void) {
-    tcsetattr(STDOUT_FILENO, TCSADRAIN, &orig_tios);
-}
-
-static void _input(char *buffer, int size) {
-    static char crlf[] = { '\r', '\n' };
-    int i;
-    
-    for (i = 0; i != size; ++i) {
-        
-        if (buffer[i] == '\r' || buffer[i] == '\n') {
-            if (do_echo)
-                printf("\r\n");
-            telnet_send(telnet, crlf, 2);
-        } else {
-            if (do_echo)
-                putchar(buffer[i]);
-            telnet_send(telnet, buffer + i, 1);
-        }
-    }
-    //fflush(stdout);
-}*/
 
 - (void)writeMessage:(NSString *)msg
 {
@@ -151,12 +121,8 @@ static void _input(char *buffer, int size) {
     for (i = 0; i != size; ++i) {
         
         if (buffer[i] == '\r' || buffer[i] == '\n') {
-//            if (do_echo)
-//                printf("\r\n");
             telnet_send(telnet, crlf, 2);
         } else {
-//            if (do_echo)
-//                putchar(buffer[i]);
             telnet_send(telnet, buffer + i, 1);
         }
     }
@@ -231,17 +197,8 @@ static void _input(char *buffer, int size) {
 - (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode
 {
     NSLog(@"%s event<%lu> stream<%@>", __func__, (unsigned long)eventCode, aStream);
-    /*
-    if (NSStreamEventOpenCompleted == eventCode && aStream == self.inputStream) {
-        NSLog(@"AppServerControlConn NSStreamEventOpenCompleted");
-        
-        [self postNotification:notificationTelnetConnOpenCompleted withObject:self];
-    } else if (NSStreamEventErrorOccurred == eventCode && aStream == self.inputStream) {
-        [self postNotification:notificationTelnetConnOpenFailed withObject:self];
-    }*/
     
     if (aStream == self.outputStream) {
-        NSLog(@"隧道可写");
         switch (eventCode) {
             case NSStreamEventHasSpaceAvailable:
                 //
@@ -251,7 +208,6 @@ static void _input(char *buffer, int size) {
                 break;
         }
     } else if (aStream == self.inputStream) {
-        NSLog(@"隧道收到数据");
         switch (eventCode) {
             case NSStreamEventHasBytesAvailable:
             {
@@ -261,11 +217,9 @@ static void _input(char *buffer, int size) {
                 memset(buf, 0, 512*1024);
                 len = [(NSInputStream *)aStream read:buf maxLength:512*1024];
                 if(len > 0) {
-                    // write to peerOutputStream
                     telnet_recv(telnet, buf, len);
-                    //NSLog(@"长度 %ld, 从telnet收了%s\n", (long)len, buf);
                 } else {
-                    NSLog(@"no buffer! 服务器断开了连接");
+                    NSLog(@"no buffer! server disconnected");
                     [self.outputStream close];
                     break;
                 }
