@@ -13,6 +13,11 @@
 		9362F3CD1E14F67100842C29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9362F3CB1E14F67100842C29 /* Main.storyboard */; };
 		9362F3CF1E14F67100842C29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9362F3CE1E14F67100842C29 /* Assets.xcassets */; };
 		9362F3D21E14F67100842C29 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9362F3D01E14F67100842C29 /* LaunchScreen.storyboard */; };
+		9362F3DD1E14F69400842C29 /* TelnetHostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9362F3DA1E14F69400842C29 /* TelnetHostsViewController.m */; };
+		9362F3DE1E14F69400842C29 /* TelnetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9362F3DC1E14F69400842C29 /* TelnetViewController.m */; };
+		9362F3E31E14F6D400842C29 /* TelnetClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9362F3E21E14F6D400842C29 /* TelnetClient.m */; };
+		9362F3E71E14F6FA00842C29 /* libtelnet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9362F3E51E14F6FA00842C29 /* libtelnet.a */; };
+		9362F3EB1E14F75700842C29 /* HostsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9362F3EA1E14F75700842C29 /* HostsDataSource.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +31,16 @@
 		9362F3CE1E14F67100842C29 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9362F3D11E14F67100842C29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9362F3D31E14F67100842C29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9362F3D91E14F69400842C29 /* TelnetHostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TelnetHostsViewController.h; sourceTree = "<group>"; };
+		9362F3DA1E14F69400842C29 /* TelnetHostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TelnetHostsViewController.m; sourceTree = "<group>"; };
+		9362F3DB1E14F69400842C29 /* TelnetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TelnetViewController.h; sourceTree = "<group>"; };
+		9362F3DC1E14F69400842C29 /* TelnetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TelnetViewController.m; sourceTree = "<group>"; };
+		9362F3E11E14F6D400842C29 /* TelnetClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TelnetClient.h; sourceTree = "<group>"; };
+		9362F3E21E14F6D400842C29 /* TelnetClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TelnetClient.m; sourceTree = "<group>"; };
+		9362F3E51E14F6FA00842C29 /* libtelnet.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtelnet.a; sourceTree = "<group>"; };
+		9362F3E61E14F6FA00842C29 /* libtelnet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libtelnet.h; sourceTree = "<group>"; };
+		9362F3E91E14F75700842C29 /* HostsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostsDataSource.h; sourceTree = "<group>"; };
+		9362F3EA1E14F75700842C29 /* HostsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostsDataSource.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9362F3E71E14F6FA00842C29 /* libtelnet.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +74,10 @@
 		9362F3C11E14F67100842C29 /* Telnet */ = {
 			isa = PBXGroup;
 			children = (
+				9362F3E81E14F74A00842C29 /* Model */,
+				9362F3E41E14F6FA00842C29 /* libtelnet */,
+				9362F3E01E14F6BA00842C29 /* Networks */,
+				9362F3DF1E14F69B00842C29 /* VCs */,
 				9362F3C51E14F67100842C29 /* AppDelegate.h */,
 				9362F3C61E14F67100842C29 /* AppDelegate.m */,
 				9362F3C81E14F67100842C29 /* ViewController.h */,
@@ -77,6 +97,44 @@
 				9362F3C31E14F67100842C29 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9362F3DF1E14F69B00842C29 /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				9362F3D91E14F69400842C29 /* TelnetHostsViewController.h */,
+				9362F3DA1E14F69400842C29 /* TelnetHostsViewController.m */,
+				9362F3DB1E14F69400842C29 /* TelnetViewController.h */,
+				9362F3DC1E14F69400842C29 /* TelnetViewController.m */,
+			);
+			name = VCs;
+			sourceTree = "<group>";
+		};
+		9362F3E01E14F6BA00842C29 /* Networks */ = {
+			isa = PBXGroup;
+			children = (
+				9362F3E11E14F6D400842C29 /* TelnetClient.h */,
+				9362F3E21E14F6D400842C29 /* TelnetClient.m */,
+			);
+			name = Networks;
+			sourceTree = "<group>";
+		};
+		9362F3E41E14F6FA00842C29 /* libtelnet */ = {
+			isa = PBXGroup;
+			children = (
+				9362F3E51E14F6FA00842C29 /* libtelnet.a */,
+				9362F3E61E14F6FA00842C29 /* libtelnet.h */,
+			);
+			path = libtelnet;
+			sourceTree = "<group>";
+		};
+		9362F3E81E14F74A00842C29 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9362F3E91E14F75700842C29 /* HostsDataSource.h */,
+				9362F3EA1E14F75700842C29 /* HostsDataSource.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,9 +207,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9362F3E31E14F6D400842C29 /* TelnetClient.m in Sources */,
+				9362F3DE1E14F69400842C29 /* TelnetViewController.m in Sources */,
 				9362F3CA1E14F67100842C29 /* ViewController.m in Sources */,
 				9362F3C71E14F67100842C29 /* AppDelegate.m in Sources */,
+				9362F3DD1E14F69400842C29 /* TelnetHostsViewController.m in Sources */,
 				9362F3C41E14F67100842C29 /* main.m in Sources */,
+				9362F3EB1E14F75700842C29 /* HostsDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,8 +327,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Telnet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Telnet/libtelnet",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryanyuan.Telnet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -276,8 +343,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Telnet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Telnet/libtelnet",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryanyuan.Telnet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -302,6 +374,7 @@
 				9362F3D81E14F67100842C29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
