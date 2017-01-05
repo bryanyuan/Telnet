@@ -9,7 +9,7 @@
 #import "TelnetViewController.h"
 #import "TelnetClient.h"
 
-@interface TelnetViewController () <TelnetDelegate, UITextViewDelegate>
+@interface TelnetViewController () <TelnetDelegate, UITextViewDelegate, UIScrollViewDelegate>
 @property TelnetClient *client;
 @property BOOL doEcho;
 @end
@@ -19,6 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     _client = [[TelnetClient alloc] init];
     _client.delegate = self;
     self.consoleView.delegate = self;
@@ -28,6 +29,10 @@
                                                                             target:self
                                                                             action:@selector(confirmQuit)];
     
+    [self.consoleView setFrame:self.view.bounds];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeSize:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChangeSize:) name:UIKeyboardDidHideNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,6 +42,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    //self.consoleView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+    
     [self.client setup:self.hostEntry];
 }
 
@@ -47,7 +54,9 @@
 }
 
 - (void)confirmQuit
-{    
+{
+    [self.consoleView resignFirstResponder];
+    
     __weak TelnetViewController *weakSelf = self;
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Terminate the session?"
@@ -87,6 +96,32 @@
         NSRange visibleRange = NSMakeRange(weakSelf.consoleView.text.length-2, 1);
         [weakSelf.consoleView scrollRangeToVisible:visibleRange];
     });
+}
+
+#pragma mark - UIKeyboardEvent
+
+- (void)keyboardWillChangeSize:(NSNotification *)notification
+{
+    NSLog(@"%s", __func__);
+    NSDictionary *info = notification.userInfo;
+    
+    CGRect r = [info[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    NSLog(@"keyboard %@", NSStringFromCGRect(r));
+    
+    CGRect oriBound = self.consoleView.bounds;
+    [self.consoleView setBounds:CGRectMake(0, 0, oriBound.size.width, oriBound.size.height-r.size.height)];
+    [self.consoleView setCenter:CGPointMake(self.consoleView.bounds.size.width/2.0, self.consoleView.bounds.size.height/2.0)];
+    [self.consoleView setNeedsLayout];
+}
+
+- (void)keyboardDidChangeSize:(NSNotification *)notification
+{
+    NSLog(@"%s", __func__);
+    
+    CGRect oriBound = self.consoleView.bounds;
+    CGPoint consoleOriPoint = self.consoleView.frame.origin;
+    [self.consoleView setBounds:self.view.bounds];
+    [self.consoleView setCenter:self.view.center];
 }
 
 #pragma mark - TelnetDelegate

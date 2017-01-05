@@ -179,8 +179,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="5O1-Mw-xvW">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="5O1-Mw-xvW">
+                                <rect key="frame" x="8" y="41" width="359" height="584"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" red="0.1450980392" green="0.99607843139999996" blue="0.08235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -188,12 +189,6 @@
                             </textView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="5O1-Mw-xvW" firstAttribute="top" secondItem="TL9-Wy-K8Z" secondAttribute="topMargin" id="55u-5Y-Khd"/>
-                            <constraint firstItem="gio-g3-2eR" firstAttribute="top" secondItem="5O1-Mw-xvW" secondAttribute="bottom" id="FFZ-4M-WpA"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="5O1-Mw-xvW" secondAttribute="trailing" constant="-20" id="bCY-wc-7Cc"/>
-                            <constraint firstItem="5O1-Mw-xvW" firstAttribute="leading" secondItem="TL9-Wy-K8Z" secondAttribute="leadingMargin" constant="-20" id="wx6-2b-IeI"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="consoleView" destination="5O1-Mw-xvW" id="eaX-re-AVV"/>
