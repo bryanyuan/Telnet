@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.title = self.hostEntry.host;
     _client = [[TelnetClient alloc] init];
     _client.delegate = self;
     self.consoleView.delegate = self;
