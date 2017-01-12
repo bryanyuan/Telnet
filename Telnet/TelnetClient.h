@@ -18,7 +18,7 @@
 
 @interface TelnetClient : NSObject <NSStreamDelegate>
 
-@property id<TelnetDelegate> delegate;
+@property (nonatomic, weak) id<TelnetDelegate> delegate;
 
 - (void)setup:(HostEntry *)entry;
 - (void)writeMessage:(NSString *)msg;
