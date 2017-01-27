@@ -12,7 +12,7 @@
 
 @interface TelnetHostsViewController () <UITextFieldDelegate>
 
-@property HostsDataSource *dataSource;
+@property (nonatomic, strong) HostsDataSource *dataSource;
 @end
 
 @implementation TelnetHostsViewController

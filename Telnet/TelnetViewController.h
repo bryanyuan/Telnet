@@ -10,6 +10,6 @@
 #import "HostsDataSource.h"
 
 @interface TelnetViewController : UIViewController
-@property (nonatomic) HostEntry *hostEntry;
+@property (nonatomic, strong) HostEntry *hostEntry;
 @property IBOutlet UITextView *consoleView;
 @end

@@ -90,7 +90,6 @@
     __weak TelnetViewController *weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         [weakSelf.consoleView insertText:msg];
-        //[weakSelf.consoleView insertText:@"\n"];
         [weakSelf.consoleView setNeedsDisplay];
         
         NSRange visibleRange = NSMakeRange(weakSelf.consoleView.text.length-2, 1);
